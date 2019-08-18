@@ -1,7 +1,9 @@
-const { classify, labelProbabilities } = require("./nb");
+const { classify, labelProbabilities, trainAll } = require("./nb");
 var wish = require("wish");
 
 describe("the file", function() {
+  trainAll();
+
   it("works", function() {
     with (true);
   });
