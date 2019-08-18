@@ -1,6 +1,8 @@
-var easy = "easy";
-var medium = "medium";
-var hard = "hard";
+function setDifficulties() {
+  easy = "easy";
+  medium = "medium";
+  hard = "hard";
+}
 
 function setSongs() {
   imagine = ["c", "cmaj7", "f", "am", "dm", "g", "e7"];
@@ -28,12 +30,14 @@ function setSongs() {
   bulletproof = ["d#m", "g#", "b", "f#", "g#m", "c#"];
 }
 
-var songs = [];
-var allChords = new Set();
-var labelCounts = new Map();
-var labelProbabilities = new Map();
-var chordCountsInLabels = new Map();
-var probabilityOfChordsInLabels = new Map();
+function setup() {
+  songs = [];
+  allChords = new Set();
+  labelCounts = new Map();
+  labelProbabilities = new Map();
+  chordCountsInLabels = new Map();
+  probabilityOfChordsInLabels = new Map();
+}
 
 function train(chords, label) {
   songs.push({
@@ -102,6 +106,8 @@ function classify(chords) {
 }
 
 function trainAll() {
+  setDifficulties();
+  setup();
   setSongs();
   train(imagine, easy);
   train(somewhereOverTheRainbow, easy);
