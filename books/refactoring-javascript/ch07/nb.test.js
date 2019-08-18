@@ -1,4 +1,4 @@
-const { classify } = require("./nb");
+const { classify, labelProbabilities } = require("./nb");
 var wish = require("wish");
 
 describe("the file", function() {
@@ -21,5 +21,11 @@ describe("the file", function() {
     wish(classified.get("easy") === 1.3433333333333333);
     wish(classified.get("medium") === 1.5060259259259259);
     wish(classified.get("hard") === 1.6884223991769547);
+  });
+
+  it("label probabilities", function() {
+    wish(labelProbabilities.get("easy") === 0.3333333333333333);
+    wish(labelProbabilities.get("medium") === 0.3333333333333333);
+    wish(labelProbabilities.get("hard") === 0.3333333333333333);
   });
 });
