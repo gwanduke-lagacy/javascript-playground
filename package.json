@@ -1,0 +1,23 @@
+{
+  "name": "javascript-playground",
+  "version": "1.0.0",
+  "description": "## Design Patterns",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -w **/*.test.js -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/letsget23/javascript-playground.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/letsget23/javascript-playground/issues"
+  },
+  "homepage": "https://github.com/letsget23/javascript-playground#readme",
+  "dependencies": {
+    "mocha": "^6.2.0",
+    "wish": "^1.0.1"
+  }
+}
