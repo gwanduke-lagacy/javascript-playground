@@ -1,4 +1,4 @@
-const { classify, labelProbabilities, trainAll, songList } = require("./nb");
+const { classifier, labelProbabilities, trainAll, songList } = require("./nb");
 var wish = require("wish");
 
 describe("the file", function() {
@@ -48,7 +48,7 @@ describe("the file", function() {
   });
 
   it("classifies", function() {
-    var classified = classify([
+    var classified = classifier.classify([
       "f#m7",
       "a",
       "dadd9",

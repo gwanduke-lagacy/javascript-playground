@@ -16,7 +16,29 @@ const classifier = {
   labelCounts: new Map(),
   labelProbabilities: new Map(),
   chordCountsInLabels: new Map(),
-  probabilityOfChordsInLabels: new Map()
+  probabilityOfChordsInLabels: new Map(),
+  classify: function(chords) {
+    const smoothing = 1.01;
+    const classified = new Map();
+    // console.log(classifier.labelProbabilities);
+    classifier.labelProbabilities.forEach(function(_probabilities, difficulty) {
+      const totalLikelihood = chords.reduce(function(total, chord) {
+        const probabilityOfChordInLabel = classifier.probabilityOfChordsInLabels.get(
+          difficulty
+        )[chord];
+        if (probabilityOfChordInLabel) {
+          return total * (probabilityOfChordInLabel + smoothing);
+        } else {
+          return total;
+        }
+      }, classifier.labelProbabilities.get(difficulty) + smoothing);
+
+      classified.set(difficulty, totalLikelihood);
+    });
+
+    // console.log(classified);
+    return classified;
+  }
 };
 
 function train(chords, label) {
@@ -68,29 +90,6 @@ function setProbabilityOfChordsInLabels() {
   });
 }
 
-function classify(chords) {
-  const smoothing = 1.01;
-  const classified = new Map();
-  // console.log(classifier.labelProbabilities);
-  classifier.labelProbabilities.forEach(function(_probabilities, difficulty) {
-    const totalLikelihood = chords.reduce(function(total, chord) {
-      const probabilityOfChordInLabel = classifier.probabilityOfChordsInLabels.get(
-        difficulty
-      )[chord];
-      if (probabilityOfChordInLabel) {
-        return total * (probabilityOfChordInLabel + smoothing);
-      } else {
-        return total;
-      }
-    }, classifier.labelProbabilities.get(difficulty) + smoothing);
-
-    classified.set(difficulty, totalLikelihood);
-  });
-
-  // console.log(classified);
-  return classified;
-}
-
 function trainAll() {
   songList.songs.forEach(function(song) {
     train(song.chords, song.difficulty);
@@ -105,7 +104,7 @@ function setLabelsAndProbabilities() {
 }
 
 module.exports = {
-  classify,
+  classifier: classifier,
   labelProbabilities,
   trainAll,
   songList
