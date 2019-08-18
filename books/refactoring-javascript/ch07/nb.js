@@ -95,7 +95,7 @@ setProbabilityOfChordsInLabels();
 function classify(chords) {
   var smoothing = 1.01;
   var classified = new Map();
-  console.log(labelProbabilities);
+  // console.log(labelProbabilities);
   labelProbabilities.forEach(function(_probabilities, difficulty) {
     var first = labelProbabilities.get(difficulty) + smoothing;
     chords.forEach(function(chord) {
@@ -108,8 +108,14 @@ function classify(chords) {
     });
     classified.set(difficulty, first);
   });
-  console.log(classified);
+
+  // console.log(classified);
+  return classified;
 }
 
 classify(["d", "g", "e", "dm"]);
 classify(["f#m7", "a", "dadd9", "dmaj7", "bm", "bm7", "d", "f#m"]);
+
+module.exports = {
+  classify
+};
