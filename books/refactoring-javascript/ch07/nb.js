@@ -24,18 +24,20 @@ const classifier = {
       Array.from(this.labelProbabilities.entries()).map(
         labelWithProbability => {
           const difficulty = labelWithProbability[0];
-          const totalLikelihood = chords.reduce((total, chord) => {
-            const probabilityOfChordInLabel = this.probabilityOfChordsInLabels.get(
-              difficulty
-            )[chord];
-            if (probabilityOfChordInLabel) {
-              return total * (probabilityOfChordInLabel + this.smoothing);
-            } else {
-              return total;
-            }
-          }, this.labelProbabilities.get(difficulty) + this.smoothing);
 
-          return [difficulty, totalLikelihood];
+          return [
+            difficulty,
+            chords.reduce((total, chord) => {
+              const probabilityOfChordInLabel = this.probabilityOfChordsInLabels.get(
+                difficulty
+              )[chord];
+              if (probabilityOfChordInLabel) {
+                return total * (probabilityOfChordInLabel + this.smoothing);
+              } else {
+                return total;
+              }
+            }, this.labelProbabilities.get(difficulty) + this.smoothing)
+          ];
         }
       )
     );
