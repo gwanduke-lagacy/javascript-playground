@@ -21,20 +21,25 @@ const classifier = {
     const smoothing = 1.01;
     const classified = new Map();
     // console.log(classifier.labelProbabilities);
-    classifier.labelProbabilities.forEach(function(_probabilities, difficulty) {
-      const totalLikelihood = chords.reduce(function(total, chord) {
-        const probabilityOfChordInLabel = classifier.probabilityOfChordsInLabels.get(
-          difficulty
-        )[chord];
-        if (probabilityOfChordInLabel) {
-          return total * (probabilityOfChordInLabel + smoothing);
-        } else {
-          return total;
-        }
-      }, classifier.labelProbabilities.get(difficulty) + smoothing);
+    this.labelProbabilities.forEach(
+      function(_probabilities, difficulty) {
+        const totalLikelihood = chords.reduce(
+          function(total, chord) {
+            const probabilityOfChordInLabel = this.probabilityOfChordsInLabels.get(
+              difficulty
+            )[chord];
+            if (probabilityOfChordInLabel) {
+              return total * (probabilityOfChordInLabel + smoothing);
+            } else {
+              return total;
+            }
+          }.bind(this),
+          this.labelProbabilities.get(difficulty) + smoothing
+        );
 
-      classified.set(difficulty, totalLikelihood);
-    });
+        classified.set(difficulty, totalLikelihood);
+      }.bind(this)
+    );
 
     // console.log(classified);
     return classified;
